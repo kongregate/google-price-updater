@@ -25,9 +25,8 @@ function findMatchingCountry(countryRow, googleCountryName) {
 }
 
 setTimeout(() => {
-  const templateNameClass = 'input.MWNIBKB-wh-k';
-  const countryRowClass = '.MWNIBKB-wc-a table tr';
-  const countryNameClass = '.MWNIBKB-Qb-d div';
+  const templateNameClass = 'div[role=article]:contains(Name) input';
+  const countryRowClass = 'div[role=article]:contains(Local prices) table tbody tr';
   const countryInputClass = 'label input:text';
   const countryCurrencyClass = 'label span';
 
@@ -45,7 +44,7 @@ setTimeout(() => {
   }
 
   tierName = `Tier ${match[1]}`;
-  
+
   a=0;
   countryRow = [];
   $.getScript('https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.8.9/jquery.csv.js').then(() => {
@@ -78,7 +77,7 @@ setTimeout(() => {
       if(countryColumn) {
         if(currency == $(this).find(countryCurrencyClass).html()) {
           foundCountries.push(countryName);
-          $(this).find(countryInputClass).val(tierRow[countryColumn]);          
+          $(this).find(countryInputClass).val(tierRow[countryColumn]);
         } else {
           mismatchedCurrencies.push(`${countryName}: Google uses ${$(this).find(countryCurrencyClass).html()} and Apple uses ${currency}`);
         }
@@ -100,5 +99,5 @@ setTimeout(() => {
     alert(`Unexpected error, send this info to a developer:\n\n${e}`);
   });
 
-  
+
 }, 500);
